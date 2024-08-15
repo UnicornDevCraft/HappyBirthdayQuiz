@@ -30,13 +30,13 @@ const quizData = {
     'answer2' : ['9', 'Количество ступенек к главному входу и вправду 9.'],
     'answer3' : ['72', 'Высота башни указаная на табличке точно 72 метра.'],
     'answer4' : ['20', 'Количество окон на фасаде — 20.'],
-    'answer5' : ['лев', 'Животное на вершине фонтана — лев.'],
+    'answer5' : ['лев', 'Животное на вершине фонтана самый настоящий лев!<br> И ты выигрываешь <strong>главный приз</strong>!'],
     //Призы:
     'prize1' : 'И ты получаешь Призрачный корабль!<br> Едем дальше?',
-    'prize2' : 'У тебя теперь есть вполне реальные доски!<br> Продолжим?',
-    'prize3' : 'Это моторная лодка! Достойный апгрейд?',
-    'prize4' : 'Потрясающая яхта! Но и это ещё не всё, жми!',
-    'prize5' : 'Аренда профессиональной crew на неделю!<br> Еда и напитки входят в стоимость!',
+    'prize2' : 'У тебя теперь есть вполне реальные доски для строительства яхты!<br> Продолжим?',
+    'prize3' : 'Вау! Ты смог построить моторную лодку!<br> Достойный апгрейд? Нет? Тогда:',
+    'prize4' : 'Наконец-то ты заработал потрясающую яхту!<br> Но и это ещё не всё, жми!',
+    'prize5' : 'Аренду <strong>профессиональной crew</strong> на неделю!<br> Еда и напитки входят в стоимость!',
 }
 
 const inputBox = document.getElementById('input-box');
@@ -49,6 +49,15 @@ const pic = document.getElementById('picture');
 const desc = document.getElementById('description');
 let questionNumber = 1;
 
+function saveData(){
+    todo.setItem("data", todo.innerHTML);
+}
+
+function show(){
+    todo.innerHTML = localStorage.getItem("data");
+    console.log(todo.innerHTML)
+}
+
 function checkAnswer(){
     if(inputBox.value === ''){
         alert("Кажется ты ничего не ответил. Попробуй ещё раз!")
@@ -56,17 +65,16 @@ function checkAnswer(){
         alert("Ответ не такой уж и большой!")
     } else{
         if(questionNumber < 6){
-            if(inputBox.value.toLowerCase() == quizData[`answer${questionNumber}`][0].toLowerCase()){
+            let userAnsw = inputBox.value.toLowerCase();
+            if(userAnsw.trim() == quizData[`answer${questionNumber}`][0].toLowerCase()){
                 inputBox.value = '';
                 questionNumber += 1;
                 congrats()
             } else{
                 alert("Неверно, попробуй ещё раз!") 
             }   
-        } else{
-            console.log('Win')
         }
-                 
+              
     }
 }
 
@@ -76,11 +84,21 @@ function congrats(){
     pic.src = `img/pic${questionNumber - 1}.webp`
     desc.innerHTML = quizData[`prize${questionNumber - 1}`]
 
-    for (let i = 0; i < rowHide.length; i++){
-        winHide[i].classList.toggle("invisible");
-        rowHide[i].classList.toggle("invisible");
-        next.classList.toggle("invisible");
+    if (questionNumber < 6){
+        for (let i = 0; i < rowHide.length; i++){
+            winHide[i].classList.toggle("invisible");
+            rowHide[i].classList.toggle("invisible");
+            console.log(questionNumber)
+        }
+    
+    } else {
+        for (let i = 0; i < rowHide.length; i++){
+            rowHide[i].classList.toggle("invisible");
+            winHide[i].classList.toggle("invisible");
+        }
+        next.remove();
     }
+    
  }
 
 function newQuestion(){
@@ -96,7 +114,6 @@ function newQuestion(){
     for (let i = 0; i < rowHide.length; i++){
         winHide[i].classList.toggle("invisible");
         rowHide[i].classList.toggle("invisible");
-        next.classList.toggle("invisible");
     }
 }
     
