@@ -25,19 +25,28 @@ const quizData = {
     Его достоинств нам не счесть,<br>
     Что там за зверь, скажи нам.`,
     //Ответы: 
-    'answer1' : ['Кафедральный собор Святого Духа', `Самая старая постройка на площади — это Кафедральный собор Святого Духа.<br>
+    'answer1' : ['Кафедральный собор Святого Духа', `Самая старая постройка на площади — это действительно Кафедральный собор Святого Духа.<br>
         (Katedrála sv. Ducha)`], 
-    'answer2' : ['9', 'Количество ступенек к главному входу — 9.'],
-    'answer3' : ['72', 'Высота башни указана на табличке — 72 метра.'],
+    'answer2' : ['9', 'Количество ступенек к главному входу и вправду 9.'],
+    'answer3' : ['72', 'Высота башни указаная на табличке точно 72 метра.'],
     'answer4' : ['20', 'Количество окон на фасаде — 20.'],
-    'answer5' : ['лев', 'Животное на вершине фонтана — лев.']
+    'answer5' : ['лев', 'Животное на вершине фонтана — лев.'],
+    //Призы:
+    'prize1' : 'И ты получаешь Призрачный корабль!<br> Едем дальше?',
+    'prize2' : 'У тебя теперь есть вполне реальные доски!<br> Продолжим?',
+    'prize3' : 'Это моторная лодка! Достойный апгрейд?',
+    'prize4' : 'Потрясающая яхта! Но и это ещё не всё, жми!',
+    'prize5' : 'Аренда профессиональной crew на неделю!<br> Еда и напитки входят в стоимость!',
 }
 
 const inputBox = document.getElementById('input-box');
 const todo = document.getElementById('todo-app');
-const rowHide = document.getElementsByClassName('row')
-const winHide = document.getElementsByClassName('win')
-const next = document.getElementById('next')
+const rowHide = document.getElementsByClassName('row');
+const winHide = document.getElementsByClassName('win');
+const next = document.getElementById('next');
+const intro = document.getElementById('intro');
+const pic = document.getElementById('picture');
+const desc = document.getElementById('description');
 let questionNumber = 1;
 
 function checkAnswer(){
@@ -64,6 +73,8 @@ function checkAnswer(){
 function congrats(){
     answer = document.getElementById('answer');
     answer.innerHTML = quizData[`answer${questionNumber - 1}`][1]
+    pic.src = `img/pic${questionNumber - 1}.webp`
+    desc.innerHTML = quizData[`prize${questionNumber - 1}`]
 
     for (let i = 0; i < rowHide.length; i++){
         winHide[i].classList.toggle("invisible");
@@ -71,28 +82,21 @@ function congrats(){
         next.classList.toggle("invisible");
     }
  }
+
 function newQuestion(){
     question = document.getElementById('question');
     start = document.getElementById('start');
     newQues = quizData[`question${questionNumber}`];
     newStart = quizData[`start${questionNumber}`];
-    /* for (let i = 0; i < newQues.length; i++) {
-        if (newQues[i] == '.' || newQues[i] == ',') {
-            newQues[i].concat(' ', '<br>')
-        }
-    }
-    for (let i = 0; i < newStart.length; i++) {
-        if (newStart[i] == '.') {
-            newStart[i].concat(' ', '<br>')
-        }
-    } */
     question.innerHTML = newQues;
     start.innerHTML = newStart;
+    next.innerHTML = 'Следующий вопрос';
+    intro.innerHTML = 'Поздравляем!';
     
     for (let i = 0; i < rowHide.length; i++){
         winHide[i].classList.toggle("invisible");
         rowHide[i].classList.toggle("invisible");
-        next.classList.toggle("invisible")
+        next.classList.toggle("invisible");
     }
 }
     

@@ -26,6 +26,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    margin-left: 80px;
 }
 .todo-app h2 img{
     width: 50px;
@@ -96,4 +97,5 @@ button{
 }
 img{
     max-width: 100%;
+    margin: 10px auto 30px;
 }
